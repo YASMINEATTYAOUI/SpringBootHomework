@@ -1,10 +1,7 @@
 package com.example.springboot.repositories;
 
 import com.example.springboot.models.Position;
-import com.example.springboot.models.Sponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SponsorRepository extends JpaRepository<Sponsor, Long> {
-    Sponsor findByName(String name);
-
+public interface PositionRepository extends JpaRepository<Position, Long> {
 }
