@@ -1,23 +1,50 @@
 package com.example.springboot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
+import java.util.List;
 
-@Data
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Entity
+@Table(name = "course")
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
+
 public class Course {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long IdCourse;
-    private String emplacement;
-    private LocalDate dateCourse;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long idCourse;
+
+    String emplacement;
+
+    LocalDate dateCourse;
+
+
+
+
+
+
+    // Many-to-Many vers Championnat
+    @ManyToMany
+    @JoinTable(
+            name = "course_championnat",                  // table intermédiaire
+            joinColumns = @JoinColumn(name = "course_id"),       // colonne qui référence Course
+            inverseJoinColumns = @JoinColumn(name = "championnat_id") // colonne qui référence Championnat
+    )
+    private List<Championnat> championnats;
+
+    @OneToMany(mappedBy = "course")
+    private List<Position> positions;
 }

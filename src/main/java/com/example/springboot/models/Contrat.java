@@ -1,23 +1,41 @@
 package com.example.springboot.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Entity
+@Table(name = "contrat")
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Contrat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idContrat;
-    private Float montant;
+    Long idContrat;
 
-    @Column(length = 4)
-    private String annee;
-    private Boolean archived ;
+    String annee;
 
+    Float montant;
+
+    Boolean archived;
+
+
+    @ManyToOne
+    @JoinColumn(name = "equipe_id_equipe")
+    private Equipe equipe;
+
+
+    @ManyToOne
+    @JoinColumn(name = "sponsor_id_sponsor")
+    private Sponsor sponsor;
 }

@@ -1,21 +1,50 @@
 package com.example.springboot.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+import java.util.List;
+
+
+@Entity
+@Table(name = "championnat")
+
+
+
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Championnat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IdChampionnat;
+    Long IdChampionnat;
+
     @Enumerated(EnumType.STRING)
-    private Categorie Categorie;
-    private String libelleC;
-    private Integer annee;
+    Categorie categorie;
+
+    String LibelleC;
+    @Column()
+    Integer Annee;
+
+
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "detail_id", referencedColumnName = "idDetail") // clé étrangère
+    private DetailChampionnat detail;
+
+    // Many-to-Many vers Course (côté inverse)
+    @ManyToMany(mappedBy = "championnats")
+    private List<Course> courses;
+
 
 }

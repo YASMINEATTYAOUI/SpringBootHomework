@@ -1,33 +1,54 @@
 package com.example.springboot.models;
 
-
 import jakarta.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Entity
+@Table(name = "sponsor")
+
+
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
+
 public class Sponsor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSponsor;
-    private String nom;
-    private String pays;
-    private Float budgetAnnuel;
-    private Boolean bloquerContrat;
-    private Boolean archived;
-    private LocalDate dateCreation;
-    private LocalDate dateDerniereModification;
-    @OneToMany
+    Long idSponsor;
+
+    String nom;
+
+    String pays;
+
+    Float budgetAnnuel;
+
+    Boolean bloquerContrat;
+
+    LocalDate dateCreation;
+
+    boolean archived ;
+
+    LocalDate dateDernierModification;
+
+
+
+
+
+
+    @OneToMany(mappedBy = "sponsor")
     private List<Contrat> contrats;
-
-
 }

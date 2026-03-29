@@ -1,22 +1,42 @@
 package com.example.springboot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Entity
+@Table(name = "detailchampionnat")
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
+
 public class DetailChampionnat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    private String code;
-    private String description;
+    Long idDetail;
 
-    @OneToOne
-    private Championnat championnat ;
+    String code;
+
+    String description;
+
+
+
+
+    // Relation inverse
+    @OneToOne(mappedBy = "detail")
+
+    // bech nhotou hethi bech metjinech l erreur INFINITE RECRUSION ki njarbou readChampionnat
+
+    @JsonIgnore
+    private Championnat championnat;
 }

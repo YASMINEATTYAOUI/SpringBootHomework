@@ -1,24 +1,47 @@
 package com.example.springboot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+import java.util.List;
+
+@Entity
+@Table(name = "pilote")
+
+
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
+
 public class Pilote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPilote;
-    private String libelleP;
-    private String prenom;
-    private Integer nbPoints;
-    private Integer classementGeneral;
+    Long idPilote;
+
+    String libelle;
+
+    Integer nbPointsTotal;
+
+    Integer classementGeneral;
+
+
+
+
+
+
+    @OneToMany(mappedBy = "pilote")
+    private List<Position> positions;
+
+    @ManyToOne
+    Equipe equipe;
 }

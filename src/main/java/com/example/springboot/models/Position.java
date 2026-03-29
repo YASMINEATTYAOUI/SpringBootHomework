@@ -1,21 +1,38 @@
 package com.example.springboot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Entity
+@Table(name = "position")
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Position {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPosition;
-    private Integer classement;
-    private Integer nbPoints;
+
+
+    Long idPosition;
+
+    Integer classement;
+
+    Integer nbPoints;
+
+    @ManyToOne
+    Course course;
+
+    @ManyToOne
+    Pilote pilote;
+
 }
